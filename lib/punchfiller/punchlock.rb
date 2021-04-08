@@ -1,14 +1,3 @@
-require_relative 'lib/login'
-
-agent = Mechanize.new
-
-login = Login.new(agent: agent)
-
-login.perform_login
-
-
-
-
 # page = agent.get(punchlock_url)
 # form = page.form_with(action: '/users/sign_in')
 # form.field_with(name: 'user[email]').value = 'jorge.david@codeminer42.com'
