@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 require 'mechanize'
+require 'colorize'
+
 require_relative "punchfiller/version"
 require_relative 'punchfiller/login'
 require_relative 'punchfiller/constants'
+require_relative 'punchfiller/last_punch'
+require_relative 'punchfiller/punchs_to_fill'
 
 module Punchfiller
 
@@ -12,14 +16,20 @@ module Punchfiller
     login = Login.new(agent: agent)
 
     login.ask_credentials
-    login.perform_login
-    index = login.page_state
+    index = login.perform_login
 
-    headers = get_table_headers(index)
+    last_punch_instance = LastPunch.new(page: index)
+    punchs_to_fill = PunchsToFill.new(last_punch_date: last_punch_instance.last_punch_date)
+    last_punch_instance.last_punch_info
+    punchs_to_fill.dates_to_fill_info
 
-    last_punch = get_last_punch(index, headers)
 
-    puts last_punt_confirmation(last_punch)
+    # if last_punch_instance.last_punch_confirmated?(last_punch_instance.last_punch)
+    #   punchs_to_fill = PunchsToFill.new(last_punch_date: last_punch_instance.last_punch_date)
+    #   p punchs_to_fill.dates
+    # else
+    #     print 'Exiting...'
+    # end
   end
 end
 

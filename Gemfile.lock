@@ -7,6 +7,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    colorize (0.8.1)
     connection_pool (2.2.3)
     diff-lcs (1.4.4)
     domain_name (0.5.20190701)
@@ -81,6 +82,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  colorize
   mechanize
   punchfiller!
   rake (~> 13.0)

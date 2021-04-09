@@ -1,33 +1,42 @@
-require 'constants'
+require_relative 'constants'
 
 class LastPunch
-  def initialize(agent:)
-    @agent = agent
-    @td = {}
+  attr_reader :last_punch
+
+  def initialize(page:)
+    @page = page
+    @last_punch = {}
+    get_last_punch
   end
 
-  def get_last_punch(page, headers)
-    table = page.search('table.table')
+  def last_punch_date
+    return if @last_punch.nil? || @last_punch[:date].nil?
+
+    DateTime.parse(@last_punch[:date])
+  end
+
+  def last_punch_info
+    message = "Last punch: \n\n".bold
+    @last_punch.each do |k,v|
+      message += "#{Constants::ROWS.key(k)}: #{v}\n"
+    end
+
+    print "#{message}\n"
+  end
+
+  private
+
+  def get_last_punch
+    headers = get_table_headers(@page)
+    table = @page.search('table.table')
     first_td = table.xpath('//*/table/tbody/tr').first.children.reject { |row| row.text.strip.empty? }
     first_td.each_with_index do |row, index|
       header = headers.find { |h| h[:index] == index}
       next if header.nil?
 
-      @td[header[:name]] = row.text.strip
+      @last_punch[header[:name]] = row.text.strip
     end
   end
-
-  def last_punt_confirmation(last_punch)
-    message = "Is this your last punch? (y/N) \n"
-    last_punch.each do |k,v|
-
-      message += "#{ROWS.key(k)}: #{v}\n"
-    end
-
-    message
-  end
-
-  private
 
   def get_table_headers(page)
     headers = []
@@ -36,7 +45,7 @@ class LastPunch
       headers << {
         name: Constants::ROWS[th.text],
         index: index
-      } if ROWS.keys.include?(th.text)
+      } if Constants::ROWS.keys.include?(th.text)
     end
 
     headers

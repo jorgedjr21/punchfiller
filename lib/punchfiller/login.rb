@@ -1,4 +1,6 @@
+require 'io/console'
 require_relative 'constants'
+
 class Login
   attr_reader :page_state
   attr_reader :email, :password
@@ -8,14 +10,16 @@ class Login
   end
 
   def ask_credentials
-    puts 'Enter your email: '
+    print 'Enter your email: '
     @email = gets.chomp
 
-    puts 'Enter the password:'
-    @password = gets.chomp
+    print 'Enter the password: '
+    @password = STDIN.noecho(&:gets).chomp
+    print "\n"
 
-    puts 'Enter the 2FA code: (look if the 2FA code has enough time before expiring)'
+    print 'Enter the 2FA code: (look if the 2FA code has enough time before expiring): '
     @twofactorcode = gets.chomp
+    print "\n"
   end
 
   def perform_login
