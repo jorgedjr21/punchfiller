@@ -6,7 +6,6 @@ class LastPunch
   def initialize(page:)
     @page = page
     @last_punch = {}
-    get_last_punch
   end
 
   def last_punch_date
@@ -16,15 +15,13 @@ class LastPunch
   end
 
   def last_punch_info
-    message = "Last punch: \n\n".bold
+    message = "\n\nLast punch: \n\n".bold
     @last_punch.each do |k,v|
       message += "#{Constants::ROWS.key(k)}: #{v}\n"
     end
 
     print "#{message}\n"
   end
-
-  private
 
   def get_last_punch
     headers = get_table_headers(@page)
@@ -37,6 +34,8 @@ class LastPunch
       @last_punch[header[:name]] = row.text.strip
     end
   end
+
+  private
 
   def get_table_headers(page)
     headers = []
