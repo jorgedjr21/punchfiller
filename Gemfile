@@ -14,3 +14,5 @@ gem "rubocop", "~> 1.7"
 gem 'mechanize'
 gem 'colorize'
 gem 'tty-spinner'
+gem 'pry'
+gem 'awesome_print'

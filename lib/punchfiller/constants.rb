@@ -1,4 +1,4 @@
-class Constants
+module Constants
   ROWS = {
     'Quando ▼'        => :date,
     'Horário inicial' => :start_time,
@@ -9,4 +9,6 @@ class Constants
   }
 
   PUNCHLOCK_URL = 'https://punchclock.cm42.io/'
+
+  TIMES_TO_FILL = [['09:00', '12:00'], ['13:00', '18:00']]
 end

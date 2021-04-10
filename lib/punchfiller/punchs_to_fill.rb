@@ -1,8 +1,8 @@
 class PunchsToFill
   attr_reader :dates
+
   def initialize(last_punch_date: )
     @last_punch_date = last_punch_date
-
   end
 
   def dates_to_fill_info
