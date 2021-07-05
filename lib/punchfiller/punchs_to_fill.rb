@@ -17,7 +17,7 @@ class PunchsToFill
   end
 
   def process_dates_to_fill
-    @dates = (@last_punch_date..Date.today).to_a
+    @dates = (@last_punch_date...Date.today).to_a
     @dates.shift
     @dates.reject! { |date| date.saturday? || date.sunday? }
   end

@@ -11,7 +11,7 @@ class Punchlock
   def fill_all
     print "Total Punchs to fill: #{@dates.count * @times.count}\n"
 
-    @dates.first(2).each do |date|
+    @dates.each do |date|
       fill_date = date.strftime('%d/%m/%Y')
       @times.each do |time|
         print "Filling date #{fill_date} from #{time.first} to #{time.last}..."
@@ -25,7 +25,7 @@ class Punchlock
     end
   end
 
-  def fill_punch_form(from_time:, to_time:, when_day:, project: 'G5')
+  def fill_punch_form(from_time:, to_time:, when_day:, project: 'GetG5')
     form = @new_punch_page.form_with(method: 'POST', action: '/punches')
 
     form.field_with(name: 'punch[from_time]').value = from_time
